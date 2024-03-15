@@ -1,0 +1,12 @@
+In my code, I assume that the average running speed in a sport club depends only on two variables, height and weight and an error term, which follows a normal distribution as specified in the code. 
+Following the specification of the “true” population regression function I analyze the effects of well-behaved measurement error in the main regressor and dependent variable.
+
+First, I analyze the case in which the measurement error enters the dependent variable. 
+By running a regression with the measurement-error-included dependent variable we can see that the standard deviation of the composite error term is much larger than the standard deviation of the original error term.
+ This leads to less accurate coefficient estimates (larger confidence intervals), however this does not affect the exogeneity of the independent variables (as long as the measurement error in the dependent variable is uncorrelated with the independent variables—which, in this case holds due to the assumption on the distribution of the error term).
+
+Second, I analyze the case in which the measurement error enters the dependent variable.
+ Similar to the previous case that the standard deviation of the composite error term is again larger than the standard error of the simple error term without measurement error, which leads to less accurate coefficient estimates. 
+In this case, however, the exogeneity assumption’s validity is not as clear as before. If there is no correlation between the measurement error and the variables, then the independent variables can still be considered exogenous. 
+In contrast, in the case when the measurement error is correlated with either of the explanatory variables, then the exogeneity assumption does not hold and the model cannot be consistently estimated using OLS. 
+In this case the measurement error in height is correlated with the composite error term, therefore the model violates the exogeneity assumption. However, it is worth pointing out that achieving complete exogeneity in practice (without a randomized control trial) might be close to impossible, therefore it might be perfectly reasonable to proceed even when there is some weak endogeneity in the model.
