@@ -1,0 +1,22 @@
+i)
+
+I implemented a Monte Carlo simulation on the correlation coefficient between time spent on social media and academic performance,
+and as the histogram exhibits we can see that the correlation coefficient is strong and negative.
+
+ii)
+
+To understand the effect of time spent on social media on academic performance I would estimate a regression model with academic performance
+as the dependent variable and time spent on social media as the independent variable.
+
+
+iii)
+
+
+This regression cannot be casually interpreted in this context since we are aware, by design, that there is a confounding variable -stress levels- driving
+the correlation between time spent on social media and academic performance.
+
+iv)
+
+I would run a regression of academic performance on time spent on social media including stress levels as a control variable, and check by how much the coefficient
+on social media changes. I expect it to decrease by controlling for stress levels. Indeed, as we can see on the output by adding the stress level variable 
+to the regression the statistical significance of time spent on social media vanished.
