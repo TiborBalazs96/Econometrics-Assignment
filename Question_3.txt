@@ -1,0 +1,4 @@
+In my code I simulate a quadratic (parabola-shaped) relationship and average out the correlations between y, the dependent variable
+and x, the independent variable. The results show that despite the clear casual relationship between y and x (since y=x^2), as the 
+number of simulations increases the average correlation goes closer and closer to zero. This illustrates how lack of correlation not
+necessarily implies lack of causality.
