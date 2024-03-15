@@ -1,0 +1,64 @@
+The following code simulates a dataset where earnings are influenced by both schooling and ability, with some random noise added. 
+The code conducts various regression analyses to explore the relationships between earnings, schooling, and ability, 
+and it also examines the relationship between the residuals of the earnings and schooling regression and the residuals of the schooling and ability regression. 
+This can be used to investigate whether any unexplained variation in earnings is related to schooling or ability.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+The first part of the code, we specify our initial assumptions regarding the variables:
+
+generate ability = rnormal(1,2)
+generate schooling=0.3*ability + rnormal(0,1.3)
+generate earnings =-0.4*schooling + 1.2*ability+ runiform()
+
+We first generate the ability variable, which, based on our initial specification follows a normal distribution with a mean of one, and a standard deviation of two.
+Then, we define the schooling variable, which depends poisitively on ability and a random term following normal distribution with mean zero, and standard deviation of 1.3.
+Finally, we generate the earnings variable, which in this context can be interpreted as the "true", population regression function,i.e., the true relationship in
+this hypothetical experiment that describes the relationship among earnings, schooling, and ability. Specifically, earnings depends negatively on schooling and positively on ability,
+with an error term following a uniform distribution.
+
+The second part of the code we analyze the effects of an omitted variable, namely ability, on the properties of the regression:
+
+regress earnings schooling ability, r
+regress earnings schooling, r
+
+In the first regression we can see that the esmitated regression coefficients on schooling and ability are very close to their pre-specified values, also
+both are statistically significant, since in this regression we estimated the "true" population regression function this comes by no surprise. 
+In the second regression, by omitting ability the coefficient on schooling becomes biased, i.e., it takes on some of the explanatory power of the ability variable
+and becomes downward biased (since ability is positively correlated to earnings, and positively to schooling, the variable on schooling becomes upwardy biased-
+which can be shown analytically as well, using the omitted variable bias formula).
+
+
+In the third part of the code, we can see a scatterplot of the schooling and earning variables.
+
+twoway (scatter earning schooling, mcolor(gray) msize(small) msymbol(o))||lfit (earning schooling)
+
+We can see that based on this plot, we might think that there is a weak, but positive relationship between the two variables, but this is just correlation, not causation.
+Since we know that ability is the confounding variable driving this positive relationship, because the pre-specified, "true", relationship between earning and schooling is negative!
+This example illustrates that it is very easy to confuse correlation and causation, without controlling for other factors, or setting up a proper randomized experiment.
+
+In the fourth part of the code, we can see 3 additional regressions involving the ability, schooling, and earning variables.
+
+regress earnings ability, r
+predict earnings_res, residuals (earnings_res -> variation in earnings that is unexplained by ability [this should be schooling + random noise]))
+
+regress schooling ability
+predict res_schol, residuals (res_schol -> variation in schooling that is unexplained by ability [this should be just random noise]))
+
+regress earnings_res res_schol, r (earnings_res is the variation in earnings that is unexplained by ability, while res_schol should be variation in schooling that is unexplained by ability, so the coefficient on res_schol is the pure effect of schooling on earnings, and as such it is identical to the coefficient on schooling in the "true" population regression function)
+
+We can tell in advance that the regression of earnings on ability will be biased, i.e., the error term will not be exogenous since the schooling variable is missing
+from the equation, consequently the coefficient on ability will be biased. Specifically, it will be downwardly biased as schooling and ability are positively correlated,
+while schooling and earning are negatively correlated. In contrast, in the regression of schooling on ability the coefficient on ability will not be biased, 
+as this regression specification matches the "true" pre-specified population relationship between schooling and ability. 
+
+By plotting the residuals of the above two regressions, we can see that the residuals from the earnings-on-ability regression will be much more scattered compared to
+the clearly well-behaved residuals from the schooling-on-ability regression.
+
+Finally, by regressing the residuals from the earnings-on-ability (biased) regression on the residuals from the schooling-on-ability (unbiased) regression we can see
+that the slope coefficient matches the slope coefficient from the first regression, which involved regressing earnings on schooling and ability. This
+is due to the partialing-out effect interpretation of regression. Specifically, in this context we know in advance that the residuals from the earnings-on-ability equation
+will contain the variation in earnings that is not explained by ability, and we also know that the residuals from the schooling-on-ability regression will contain the variation
+in schooling that is not explained by ability (which we know is just a random process, specifically a normal distribution with mean 0, and standard deviation of 1.3). By regressing the
+residuals from the earnings-on-ability regression (i.e, the variation in earnings that is not explained by ability-that is schooling) on the residuals 
+from the schooling-on-ability regression (i.e., the variation in schooling that is not explained by ability) we get back the coefficient of the schooling variable from the original
+"true" population regression, which involved both explanatory variables.
