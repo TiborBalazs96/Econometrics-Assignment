@@ -1,0 +1,26 @@
+i) 
+
+The correlation between ice cream sales and swimming pool attendance is 0.9908, which is an extremely high correlation.
+
+ii)
+
+The correlation between ice cream sales and swimming pool attendance definitely not imply a causal relationship between the two variables,
+in my intuition, there has to be a confounding variable, namely temperature, which is the true cause of both ice cream sales and swimming pool attendance.
+We can see that the correlations between temperature and ice cream sales and swimming pool attendance are, respectively 0.9969 and 0.9936, which is extremely strong as well.
+
+iii)
+
+We can include temperature as a control variable in the regressions, as we do not have to worry about reverse causality in this case, since neither 
+ice cream sales nor swimming pool attendance can causally influence the whether. In contrast, temperature can intuitively cause higher ice cream sales and 
+higher swimming pool attendance. If we control for temperature in the following regressions:
+
+reg ice_cream_sales swimming_pool_attendance
+reg swimming_pool_attendance ice_cream_sales
+
+
+reg ice_cream_sales swimming_pool_attendance temperature
+reg swimming_pool_attendance ice_cream_sales temperature
+
+we can see that the bad control variables (swimming pool attendance in the first case, and ice cream sales in the second case) lose their statistical 
+significance in the regressions. The two variables are bad controls, because they might as well be dependent variables in this context, since the temperature
+variable is the true underlying cause driving the correlations.
